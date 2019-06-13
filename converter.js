@@ -115,8 +115,6 @@ linearFullCode.b = linearFullCode.B = 12640, // ㅠ
 linearFullCode.n = linearFullCode.N = 12636, //ㅠㅜ
 linearFullCode.m = linearFullCode.M = 12641; // ㅡ
 
-var vowels = 'yYuUiIoOpPhHjJkKlLbBnNmM'
-
 // The precomposed hangul syllables in the Hangul Syllables block 
 // in Unicode are algorithmically defined, using the following formula:
 // [(initial) × 588 + (medial) × 28 + (final)] + 44032
@@ -129,11 +127,14 @@ function convertToHangul(input) {
   hangul = ''
   for (i = 0; i < input.length;) {
     // First character is a vowel part
-    if (vowels.indexOf(input.substring(0, 1)) != -1) {
+    if (i === 0 && input.substring(i, i+1) in medialJamo) {
       hangul += String.fromCharCode(linearFullCode[input.substring(0, 1)])
       i += 1
-    } else if () {
-
+    } else if (input.substring(i, i+1) in initialJamo) {
+        if (input.substring(i+1, i+2) in initialJamo) {
+          hangul += String.fromCharCode(linearFullCode[input.substring(i, i+1)])
+          i += 1
+        }
     }
   }
   hangulBox.value = hangul;
