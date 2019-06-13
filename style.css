@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+#container {
+  text-align: center;
+  padding: 8px;
+}
+
+textarea {
+  width: 600px;
+  height: 200px;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.section_title {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px;
+  text-decoration: underline;
+  text-align: left;
+}
