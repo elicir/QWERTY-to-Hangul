@@ -104,6 +104,11 @@ linearFullCode.d = linearFullCode.D = 12615, // ㅇ
 linearFullCode.f = linearFullCode.F = 12601, // ㄹ
 linearFullCode.g = linearFullCode.G = 12622, // ㅎ
 linearFullCode.h = linearFullCode.H = 12631, // ㅗ
+linearFullCode.hk = linearFullCode.Hk 
+= linearFullCode.HK = linearFullCode.hK = 12632, // ㅘ
+linearFullCode.ho = linearFullCode.Ho = 12633, // ㅙ
+linearFullCode.hl = linearFullCode.Hl 
+= linearFullCode.HL = linearFullCode.hL = 12634, // ㅚ 
 linearFullCode.j = linearFullCode.J = 12627, // ㅓ
 linearFullCode.k = linearFullCode.K = 12623, // ㅏ
 linearFullCode.l = linearFullCode.L = 12643, // ㅣ
@@ -113,7 +118,15 @@ linearFullCode.c = linearFullCode.C = 12618, // ㅊ
 linearFullCode.v = linearFullCode.V = 12621, // ㅍ
 linearFullCode.b = linearFullCode.B = 12640, // ㅠ
 linearFullCode.n = linearFullCode.N = 12636, //ㅠㅜ
-linearFullCode.m = linearFullCode.M = 12641; // ㅡ
+linearFullCode.nj = linearFullCode.Nj 
+= linearFullCode.NJ = linearFullCode.nJ = 12637, // ㅝ
+linearFullCode.np = linearFullCode.Np = 12638, // ㅞ
+linearFullCode.nl = linearFullCode.Nl 
+= linearFullCode.NL = linearFullCode.nL = 12639, // ㅟ
+linearFullCode.m = linearFullCode.M = 12641, // ㅡ
+linearFullCode.ml = linearFullCode.Ml 
+= linearFullCode.ML = linearFullCode.ML = 12642; // ㅢ
+
 
 // The precomposed hangul syllables in the Hangul Syllables block 
 // in Unicode are algorithmically defined, using the following formula:
@@ -125,15 +138,32 @@ function convertToHangul(input) {
   medialJamoValue = -1;
   finalJamoValue = -1;
   hangul = ''
+  var codeNum = 0
+  // I don't think any of this is right, we have to rethink this design
+  // we need to build the syllable blocks and reset to a default "not block 
+  // building" state 
   for (i = 0; i < input.length;) {
     // First character is a vowel part
     if (i === 0 && input.substring(i, i+1) in medialJamo) {
-      hangul += String.fromCharCode(linearFullCode[input.substring(0, 1)])
-      i += 1
+      if (input.substring(i, i+2) in medialJamo) {
+        hangul += String.fromCharCode(linearFullCode[input.substring(0, 2)]);
+        i += 2;
+      } else {
+        hangul += String.fromCharCode(linearFullCode[input.substring(0, 1)]);
+        i += 1;
+      }
     } else if (input.substring(i, i+1) in initialJamo) {
-        if (input.substring(i+1, i+2) in initialJamo) {
-          hangul += String.fromCharCode(linearFullCode[input.substring(i, i+1)])
-          i += 1
+        hangul += String.fromCharCode(linearFullCode[input.substring(i, i+1)]);
+        i += 1;
+        if (input.substring(i, i+1) in medialJamo) {
+          initialJamoValue = initialJamo[input.substring(i-1, i)];
+          medialJamoValue = medialJamo[input.substring(i, i+1)];
+          codeNum = ((initialJamoValue * 588) + (medialJamoValue * 28) + 0) + 44032;
+          hangul = String.fromCharCode(codeNum); // Have to replace only the char b4 medial 
+          i += 1;
+        } else {
+          hangul += String.fromCharCode(linearFullCode[input.substring(i, i+1)]);
+          i += 1;
         }
     }
   }
