@@ -149,10 +149,10 @@ function blockBuilder(text) {
     if (text.substring(i, i+1) in medialJamo) {
       // If it's a compound vowel part
       if (text.substring(i, i+2) in medialJamo) {
-        blocks += String.fromCharCode(linearFullCode[text.substring(0, 2)]);
+        blocks += String.fromCharCode(linearFullCode[text.substring(i, i+2)]);
         i += 2;
       } else {
-        blocks += String.fromCharCode(linearFullCode[text.substring(0, 1)]);
+        blocks += String.fromCharCode(linearFullCode[text.substring(i, i+1)]);
         i += 1;
       }
     // First character is a consonant
