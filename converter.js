@@ -134,57 +134,66 @@ linearFullCode.ml = linearFullCode.Ml
 
 function convertToHangul(input) {
   var hangulBox = document.getElementById('han');
-  initialJamoValue = -1;
-  medialJamoValue = -1;
-  finalJamoValue = -1;
-  hangul = ''
-  var codeNum = 0
-  // I don't think any of this is right, we have to rethink this design
-  // we need to build the syllable blocks and reset to a default "not block 
-  // building" state 
-  // So basically, we have to keep passing the input string in until it's
-  // all in hangul and then probably at the very end of that set it equal
-  // to what shows up in the box (ie. accumulate blocks in var hangul, then
-  // set that to var result or something like that)
-  // But the accumulation should be done by a helper function recursively
-  // until all of the string is processed
-  for (i = 0; i < input.length;) {
+  hangulBox.value = blockBuilder(input);
+}
+
+function blockBuilder(text) {
+  var blocks = '';
+  var i = 0;
+  var initialJamoValue = -1;
+  var medialJamoValue = -1;
+  var finalJamoValue = -1;
+  var codeNum = 0;
+  while (i < text.length) {
     // First character is a vowel part
-    if (i === 0 && input.substring(i, i+1) in medialJamo) {
-      if (input.substring(i, i+2) in medialJamo) {
-        hangul += String.fromCharCode(linearFullCode[input.substring(0, 2)]);
+    if (i === 0 && text.substring(i, i+1) in medialJamo) {
+      // If it's a compound vowel part
+      if (text.substring(i, i+2) in medialJamo) {
+        blocks += String.fromCharCode(linearFullCode[text.substring(0, 2)]);
         i += 2;
       } else {
-        hangul += String.fromCharCode(linearFullCode[input.substring(0, 1)]);
+        blocks += String.fromCharCode(linearFullCode[text.substring(0, 1)]);
         i += 1;
       }
     // First character is a consonant
-    } else if (input.substring(i, i+1) in initialJamo) {
-        i += 1;
+    } else if (text.substring(i, i+1) in initialJamo) {
         // Second character is a vowel
-        if (input.substring(i, i+1) in medialJamo) {
-          initialJamoValue = initialJamo[input.substring(i-1, i)];
-          medialJamoValue = medialJamo[input.substring(i, i+1)];
+        if (text.substring(i+1, i+2) in medialJamo) {
+          initialJamoValue = initialJamo[text.substring(i, i+1)];
+          if (text.substring(i+1, i+3) in medialJamo) {
+            medialJamoValue = medialJamo[text.substring(i+1, i+3)];
+            i += 3;
+          } else {
+            medialJamoValue = medialJamo[text.substring(i+1, i+2)];
+            i += 2;
+          }
           // Third character is a final consonant part
-          if (input.substring(i+1, i+2) in finalJamo) {
-            finalJamoValue = finalJamo[input.substring(i+1, i+2)];
-            // Need to check here if finalJamo is also an initialJamo and then
-            // check if character after it (4th) is a vowel, in which case
-            // it restarts the check from 1 ? (recursion?)
-            // TODO: implement these two checks
-          } else { finalJamoValue = 0 }
+          if (text.substring(i, i+1) in finalJamo) {
+            // Compound final part and no vowel after
+            if (text.substring(i, i+2) in finalJamo && 
+            !(text.substring(i+2, i+3) in medialJamo)) {
+              finalJamoValue = finalJamo[text.substring(i, i+2)];
+              i += 2;
+            } else if (text.substring(i, i+1) in initialJamo &&
+            text.substring(i+1, i+2) in medialJamo) {
+              finalJamoValue = 0;
+            } else {
+              finalJamoValue = finalJamo[text.substring(i, i+1)];
+              i += 1;
+            }
+          } else { finalJamoValue = 0; }
           // No finalJamo, so the block is complete and is created, and any
           // characters after the first two are going to create another block
           codeNum = ((initialJamoValue * 588)
           + (medialJamoValue * 28) + finalJamoValue) + 44032;
-          hangul += String.fromCharCode(codeNum); 
-          i += 1;
+          blocks += String.fromCharCode(codeNum);
         // Second character is not a vowel
         } else {
-          hangul += String.fromCharCode(linearFullCode[input.substring(i, i+1)]);
+          blocks += String.fromCharCode(linearFullCode[text.substring(i, i+1)]);
+          i += 1
           // Then the next block is built from the characters after
         }
     }
   }
-  hangulBox.value = hangul;
+  return blocks;
 }
