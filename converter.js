@@ -146,7 +146,7 @@ function blockBuilder(text) {
   var codeNum = 0;
   while (i < text.length) {
     // First character is a vowel part
-    if (i === 0 && text.substring(i, i+1) in medialJamo) {
+    if (text.substring(i, i+1) in medialJamo) {
       // If it's a compound vowel part
       if (text.substring(i, i+2) in medialJamo) {
         blocks += String.fromCharCode(linearFullCode[text.substring(0, 2)]);
