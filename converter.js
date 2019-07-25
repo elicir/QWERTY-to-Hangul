@@ -223,9 +223,10 @@ function blockBreaker(text) {
   var codeNum = 0;
   while (i < text.length) {
     codeNum = String.prototype.charCodeAt(i);
+    // initialJamoValue = (codeNum - 44032) ...
     codeNum = ((initialJamoValue * 588)
     + (medialJamoValue * 28) + finalJamoValue) + 44032;
-    
+    // idk how to do this....................
   }
   return blocks;
 }
