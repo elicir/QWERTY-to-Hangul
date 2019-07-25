@@ -145,7 +145,7 @@ function blockBuilder(text) {
   var finalJamoValue = -1;
   var codeNum = 0;
   while (i < text.length) {
-    // First character is a vowel part
+    // First character is a vowel
     if (text.substring(i, i+1) in medialJamo) {
       // If it's a compound vowel part
       if (text.substring(i, i+2) in medialJamo) {
@@ -197,6 +197,35 @@ function blockBuilder(text) {
       blocks += text.substring(i, i+1)
       i += 1
     }
+  }
+  return blocks;
+}
+
+function findKey(obj, val) {
+
+}
+
+function convertToAlpha(input) {
+  var alphaBox = document.getElementById('eng');
+  alphaBox.value = blockBreaker(input);
+}
+
+function blockBreaker(text) {
+  // ?? have to do math with code and formula
+  // check if it's a linear part and if it's not then
+  // undo the formula and use the individual jamoValues to 
+  // search for the corresponding key values (using findKey)
+  var str = '';
+  var i = 0;
+  var initialJamoValue = -1;
+  var medialJamoValue = -1;
+  var finalJamoValue = -1;
+  var codeNum = 0;
+  while (i < text.length) {
+    codeNum = String.prototype.charCodeAt(i);
+    codeNum = ((initialJamoValue * 588)
+    + (medialJamoValue * 28) + finalJamoValue) + 44032;
+    
   }
   return blocks;
 }
