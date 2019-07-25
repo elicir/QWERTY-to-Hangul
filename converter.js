@@ -193,6 +193,9 @@ function blockBuilder(text) {
           i += 1
           // Then the next block is built from the characters after
         }
+    } else {
+      blocks += text.substring(i, i+1)
+      i += 1
     }
   }
   return blocks;
