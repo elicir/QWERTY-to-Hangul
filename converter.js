@@ -190,12 +190,12 @@ function blockBuilder(text) {
         // Second character is not a vowel
         } else {
           blocks += String.fromCharCode(linearFullCode[text.substring(i, i+1)]);
-          i += 1
+          i += 1;
           // Then the next block is built from the characters after
         }
     } else {
-      blocks += text.substring(i, i+1)
-      i += 1
+      blocks += text.substring(i, i+1);
+      i += 1;
     }
   }
   return blocks;
@@ -223,10 +223,21 @@ function blockBreaker(text) {
   var codeNum = 0;
   while (i < text.length) {
     codeNum = String.prototype.charCodeAt(i);
-    // initialJamoValue = (codeNum - 44032) ...
-    codeNum = ((initialJamoValue * 588)
-    + (medialJamoValue * 28) + finalJamoValue) + 44032;
+    if (12610 <= codeNum <= 12642) {
+      str += findKey(linearFullCode, codeNum);
+      i += 1;
+    } else if (0 <= codeNum - 44032 <= 11171) {
+      initialJamoValue = floor((codeNum - 44032) / 588);
+      for (j = 0, filled = false; j < 28 && filled; j++) {
+        
+      }// medialJamoValue = 
+    } else {
+      str += text.substring(i, i+1);
+      i += 1;
+    }
+    // codeNum = ((initialJamoValue * 588)
+    //+ (medialJamoValue * 28) + finalJamoValue) + 44032;
     // idk how to do this....................
   }
-  return blocks;
+  return str;
 }
