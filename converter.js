@@ -202,7 +202,12 @@ function blockBuilder(text) {
 }
 
 function findKey(obj, val) {
-
+  var arr = Object.keys(obj);
+  for (i = 0; i < arr.length; i++) {
+    if (obj[arr[i]] === val) {
+      return arr[i];
+    }
+  }
 }
 
 function convertToAlpha(input) {
@@ -211,10 +216,6 @@ function convertToAlpha(input) {
 }
 
 function blockBreaker(text) {
-  // ?? have to do math with code and formula
-  // check if it's a linear part and if it's not then
-  // undo the formula and use the individual jamoValues to 
-  // search for the corresponding key values (using findKey)
   var str = '';
   var i = 0;
   var initialJamoValue = -1;
@@ -228,16 +229,26 @@ function blockBreaker(text) {
       i += 1;
     } else if (0 <= codeNum - 44032 <= 11171) {
       initialJamoValue = floor((codeNum - 44032) / 588);
-      for (j = 0, filled = false; j < 28 && filled; j++) {
-        
-      }// medialJamoValue = 
+      for (j = 0, filled = false; j < 28 && !filled; j++) {
+        var ans = (codeNum - 44032 - initialJamoValue * 588 - j) / 28;
+        if (Number.isInteger(ans)) {
+          medialJamoValue = ans;
+          finalJamoValue = j;
+          filled = true;
+        }
+      } 
+      str += findKey(initialJamo, initialJamoValue);
+      str += findKey(medialJamo, medialJamoValue);
+      if (finalJamoValue != 0) {
+        str += findKey(finalJamo, finalJamoValue);
+      }
+      i += 1;
     } else {
       str += text.substring(i, i+1);
       i += 1;
     }
-    // codeNum = ((initialJamoValue * 588)
-    //+ (medialJamoValue * 28) + finalJamoValue) + 44032;
-    // idk how to do this....................
   }
   return str;
 }
+// Currently all characters are output as undefined INCL. strings
+// passed directly
