@@ -206,9 +206,18 @@ function findKey(obj, val) {
   var arr = Object.keys(obj);
   for (i = 0; i < arr.length; i++) {
     if (obj[arr[i]] === val) {
-      return arr[i];
+      if ("QWERTY".includes(arr[i])) {
+        if(document.getElementById('caps').checked) {
+          return arr[i];
+        } else if(document.getElementById('repeat').checked) {
+          return arr[i].toLowerCase() + arr[i].toLowerCase();
+        }
+      } else {
+        return arr[i];
+      }
     }
   }
+  
 }
 
 function convertToAlpha(input) {
