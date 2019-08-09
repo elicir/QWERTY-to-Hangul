@@ -20,7 +20,11 @@
       </form>
       <div class="section_title">한글</div>
       <form>
-          <textarea id="han"></textarea>
+          <textarea id="han" oninput="convertToAlpha(this.value);"
+          placeholder="Enter Hangul..."
+          onkeyup="convertToAlpha(this.value);"
+          onkeydown="convertToAlpha(this.value);"
+          onpaste="convertToAlpha(this.value);"></textarea>
       </form>
       
   </div>
