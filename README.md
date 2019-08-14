@@ -1,5 +1,5 @@
 # QWERTY-to-Hangul
-(LINK)[https://elicir.github.io/q2han.html]
+[LINK](https://elicir.github.io/q2han.html)
 
 A converter between alphabet characters and Dubeolsik keyboard hangul input.
 
