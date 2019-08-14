@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -28,6 +29,16 @@
       </form>
       <input type="radio" name="option" id="caps" checked="checked"> Capitalize 
       <input type="radio" name="option" id="repeat"> Repeat<br>
+  </div>
+  <div id="desc">
+      <div class="section_title" id="desc_title">Converting Hangul to Alpha:</div>
+      <div class="desc">On some IMEs such as on Mac, pressing the keys 
+          corresponding to ㅂㅈㄷㄱㅅ (qwert) twice in a row will group them 
+          together into a double consonant <b><i>(Select "Repeat")</i></b>. 
+          <br>On others the double consonant can only be accessed by 
+          holding shift <b><i>(Select "Capitalize")</i></b>.
+        <br> Please note, if "Repeat" is selected, you cannot convert any of 
+        "ㅃㅉㄸㄲㅆ" into capital letters.</div>
   </div>
 </div>
 <script src="converter.js"></script>
