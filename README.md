@@ -5,7 +5,7 @@ The most commonly used Korean 2-Set keyboard uses a QWERTY keyboard mapped to Ko
 
 The mapping of QWERTY keys to Hangul letters allows for people to type in Korean in alphabet letters, either for fun original usernames, to type somewhat in code, etc. 
 
-For example, Korean singer IU's Instagram username is dlwlrma (equivalent to 이지금 [right now], a word play on her full name 이지은).
+For example, Korean singer IU's [Instagram](https://instagram.com/dlwlrma) username is dlwlrma (equivalent to 이지금 [right now], a word play on her full name 이지은).
 
 This converter converts the alphabet letter key entered to the Hangul letter that it's mapped to, and vice versa. 
 
